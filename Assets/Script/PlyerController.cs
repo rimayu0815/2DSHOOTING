@@ -11,6 +11,8 @@ public class PlyerController : MonoBehaviour
     private float x;
     private float y;
 
+    private Bullet bullet;
+
     // Start is called before the first frame update
     void Start()
     {
