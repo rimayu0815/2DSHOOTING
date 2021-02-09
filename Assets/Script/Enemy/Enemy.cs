@@ -23,7 +23,11 @@ public class Enemy : MonoBehaviour
     private Image redGauge;
 
     [SerializeField]
-    private GameObject EnemyHPGauge;
+    private GameObject enemyHPGauge;
+
+
+
+    public bool destroiedEnemy = false;//破壊されたかの判断に使う
 
 
 
@@ -74,7 +78,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     //public void DecreseSliderHP()
     //{
-    //    enemySlider.value = enemyHP;
+    //    enemySlider.value = enemyHP;　　必要ない
     //}
 
     ///<summary>
@@ -89,11 +93,14 @@ public class Enemy : MonoBehaviour
         else if(greenGauge.fillAmount <=0)
         {
             redGauge.fillAmount -= damage / enemyHP;
+
+            //Debug.Log(redGauge.fillAmount);
         }
-        else if(redGauge.fillAmount <= 0)
+        if(redGauge.fillAmount <= 0)
         {
-            Destroy(EnemyHPGauge);
-            Destroy(this.gameObject,1.0f);       
+            destroiedEnemy = true;
+            Destroy(enemyHPGauge);
+            Destroy(this.gameObject);       
         }
     }
 }

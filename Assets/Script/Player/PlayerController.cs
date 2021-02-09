@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PlyerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     public float speed;
 
@@ -15,6 +16,18 @@ public class PlyerController : MonoBehaviour
 
     [Header("JoyStickの場合")]
     public bool isJoyStick;
+
+
+    [SerializeField]
+    private Image greenGauge;
+    [SerializeField]
+    private float playerHP;
+    [SerializeField]
+    private float damage;
+    [SerializeField]
+    private GameObject playerHPGauge;
+
+    public bool destroiedPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,5 +66,38 @@ public class PlyerController : MonoBehaviour
         }
         x = 0;
         y = 0;
+    }
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        Destroy(other.gameObject);//弾オブジェクトを破壊
+
+        //if(enemyHP > 0.0f)//０より上なら１減らして、０未満なら破壊 Slider版HPゲージで使用
+        //{
+        //    enemyHP -= damage;
+        //}
+        //else
+        //{
+        //    Destroy(this.gameObject);
+        //}
+
+
+
+        DecreseGaugePlayerHP();
+
+    }
+
+    private void DecreseGaugePlayerHP()
+    {
+        if (greenGauge.fillAmount > 0.0f)
+        {
+            greenGauge.fillAmount -= damage / playerHP;
+        }
+        else
+        {
+
+            destroiedPlayer = true;
+            Destroy(playerHPGauge);
+            Destroy(this.gameObject);
+        }
     }
 }
