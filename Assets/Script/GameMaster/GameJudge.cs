@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameJudge: MonoBehaviour
 {
-    private Enemy enemy;
-    private PlayerController playercontroller;
+    private Enemy enemy;//Enemyが破壊されたという判定を取得するため
+    private PlayerController playercontroller;//Playerが破壊されたという判定を取得するため
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,10 @@ public class GameJudge: MonoBehaviour
         //isClear();作成してから
         //isGameOver();
     }
+
+    /// <summary>
+    /// クリア判定
+    /// </summary>
     public void isClear()
     {
         if (enemy.destroiedEnemy == true)
@@ -27,6 +31,11 @@ public class GameJudge: MonoBehaviour
             SceneManager.LoadScene("Result");
         }
     }
+
+
+    /// <summary>
+    /// ゲームオーバー判定
+    /// </summary>
     public void isGameOver()
     {
         if(playercontroller.destroiedPlayer == true)

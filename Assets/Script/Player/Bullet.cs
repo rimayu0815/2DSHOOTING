@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     //public GameObject bullet;
     private  Rigidbody2D rbBullet;
 
-    public float speed;
+    public float speed;//弾のスピード
 
     //private  float x;
     //private  float y;
@@ -41,11 +41,15 @@ public class Bullet : MonoBehaviour
         Fire();
     }
 
+
+    /// <summary>
+    /// 弾を撃つ
+    /// </summary>
     public void Fire()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))//右クリックしたら
         {
-            GameObject bullet = Instantiate(BulletPrefab, transform);
+            GameObject bullet = Instantiate(BulletPrefab, transform);//弾を生成
 
             //Debug.Log(transform.position);
             rbBullet = bullet.GetComponent<Rigidbody2D>();
@@ -59,7 +63,7 @@ public class Bullet : MonoBehaviour
         //rbBullet.AddForce(transform.forward * speed);
 
         
-            rbBullet.velocity = new Vector2(0, speed);
+            rbBullet.velocity = new Vector2(0, speed);//弾の方向指定
 
             Destroy(bullet,2.0f);
         }

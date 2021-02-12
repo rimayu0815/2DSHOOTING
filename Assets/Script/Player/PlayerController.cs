@@ -5,34 +5,37 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed;
+    public float speed;//移動スピード
 
-    private Rigidbody2D rb;
+    private Rigidbody2D rb;//弾の運動
 
-    private float x;
-    private float y;
+    private float x;//横移動
+    private float y;//縦移動
 
-    private Bullet bullet;
+    //private Bullet bullet;
 
     [Header("JoyStickの場合")]
     public bool isJoyStick;
 
 
     [SerializeField]
-    private Image greenGauge;
+    private Image greenGauge;//HPゲージ
     [SerializeField]
-    private float playerHP;
+    private float playerMaxHP;//HPの最大値
     [SerializeField]
-    private float damage;
+    private float damage;//Enemyからのダメージ　　ここを敵で管理できるように変更した方がいい
     [SerializeField]
-    private GameObject playerHPGauge;
+    private GameObject playerHPGauge;//HPゲージがなくなった時にゲージやフレームごと破壊するため
 
-    public bool destroiedPlayer = false;
+    public bool destroiedPlayer = false;//GameOverやクリア等の判定
+    private GameObject player;//HPゲージがなくなった時にオブジェクトごと破壊するため
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -42,6 +45,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Playerの移動操作
+    /// </summary>
     public void PlayerMove()
     {
         if(isJoyStick)
@@ -67,9 +73,18 @@ public class PlayerController : MonoBehaviour
         x = 0;
         y = 0;
     }
-    public void OnCollisionEnter2D(Collision2D other)
+
+
+    /// <summary>
+    /// Playerの当たり判定
+    /// </summary>
+    public void OnTriggerEnter2D(Collider2D other)//CollisionからTorrigerに変更　弾同士がぶつかるため
     {
-        Destroy(other.gameObject);//弾オブジェクトを破壊
+        if(other.CompareTag("EnemyBullet"))
+        {
+            Destroy(other.gameObject);
+        }
+        //Destroy(other.gameObject);//弾オブジェクトを破壊
 
         //if(enemyHP > 0.0f)//０より上なら１減らして、０未満なら破壊 Slider版HPゲージで使用
         //{
@@ -86,18 +101,22 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// ダメージ処理
+    /// </summary>
     private void DecreseGaugePlayerHP()
     {
         if (greenGauge.fillAmount > 0.0f)
         {
-            greenGauge.fillAmount -= damage / playerHP;
+            greenGauge.fillAmount -= damage / playerMaxHP;
         }
-        else
+        if(greenGauge.fillAmount <= 0.0f)
         {
 
             destroiedPlayer = true;
             Destroy(playerHPGauge);
-            Destroy(this.gameObject);
+            Destroy(player);
         }
     }
 }
