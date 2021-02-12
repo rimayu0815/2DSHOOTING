@@ -21,6 +21,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Image greenGauge;//HPゲージ
     [SerializeField]
+    private Image redGauge;//HP赤ゲージ
+    [SerializeField]
+    private Sprite redSprite;
+    [SerializeField]
+    private Sprite greenSprite;
+    //private GameObject imageP;
+    [SerializeField]
     private float playerMaxHP;//HPの最大値
     [SerializeField]
     private float damage;//Enemyからのダメージ　　ここを敵で管理できるように変更した方がいい
@@ -36,6 +43,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         player = GameObject.Find("Player");
+
+        //imageP = GameObject.Find("ImageP");
     }
 
     // Update is called once per frame
@@ -63,7 +72,7 @@ public class PlayerController : MonoBehaviour
         {
            //rb.velocity = new Vector2(x * speed, y * speed);滑ってしまう
 
-           Vector2 moveDir = new Vector2(x,y).normalized;//速度ベクトルを作成するので、値が０か１になる
+           Vector2 moveDir = new Vector2(x,y);//速度ベクトルを作成するので、値が０か１になる
             rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
         }
         else
@@ -110,6 +119,13 @@ public class PlayerController : MonoBehaviour
         if (greenGauge.fillAmount > 0.0f)
         {
             greenGauge.fillAmount -= damage / playerMaxHP;
+        }
+        if(greenGauge.fillAmount <=0.5f)
+        {
+        //    sprite = Resources.Load<Sprite>("ゲージベース2");
+        //    redGauge = this.GetComponent<Image>();
+        //    redGauge.sprite = sprite;
+            greenGauge.sprite = redSprite;
         }
         if(greenGauge.fillAmount <= 0.0f)
         {

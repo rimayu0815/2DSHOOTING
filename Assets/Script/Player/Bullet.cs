@@ -16,6 +16,11 @@ public class Bullet : MonoBehaviour
 
     public GameObject BulletPrefab;
 
+    [SerializeField]
+    private float x;
+
+    public Transform playertran;// playerの位置を参照
+
     //public GameObject canvas;
 
     //private Vector3 startPosition;
@@ -49,7 +54,7 @@ public class Bullet : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))//右クリックしたら
         {
-            GameObject bullet = Instantiate(BulletPrefab, transform);//弾を生成
+            GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
 
             //Debug.Log(transform.position);
             rbBullet = bullet.GetComponent<Rigidbody2D>();
@@ -57,13 +62,11 @@ public class Bullet : MonoBehaviour
 
             //bullet.transform.SetParent(canvas.transform, false);
 
-        //transform.position = startPosition;
+            //transform.position = startPosition;
 
-
-        //rbBullet.AddForce(transform.forward * speed);
-
+            //rbBullet.AddForce(transform.up * speed);
         
-            rbBullet.velocity = new Vector2(0, speed);//弾の方向指定
+            rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
 
             Destroy(bullet,2.0f);
         }
