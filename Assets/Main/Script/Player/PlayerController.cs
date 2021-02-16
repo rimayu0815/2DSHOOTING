@@ -92,6 +92,9 @@ public class PlayerController : MonoBehaviour
         if(other.CompareTag("EnemyBullet"))
         {
             Destroy(other.gameObject);
+
+            DecreseGaugePlayerHP();
+
         }
         //Destroy(other.gameObject);//弾オブジェクトを破壊
 
@@ -106,7 +109,6 @@ public class PlayerController : MonoBehaviour
 
 
 
-        DecreseGaugePlayerHP();
 
     }
 
@@ -132,7 +134,8 @@ public class PlayerController : MonoBehaviour
 
             destroiedPlayer = true;
             Destroy(playerHPGauge);
-            Destroy(player);
+            //Destroy(player);
+            player.SetActive(false);
         }
     }
 }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameJudge: MonoBehaviour
+public class MainMaster: MonoBehaviour
 {
-    private Enemy enemy;//Enemyが破壊されたという判定を取得するため
-    private PlayerController playercontroller;//Playerが破壊されたという判定を取得するため
+    public Enemy enemy;//Enemyが破壊されたという判定を取得するため
+    public PlayerController playercontroller;//Playerが破壊されたという判定を取得するため
 
     // Start is called before the first frame update
     void Start()
@@ -17,8 +17,8 @@ public class GameJudge: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //isClear();作成してから
-        //isGameOver();
+        isClear();
+        isGameOver();
     }
 
     /// <summary>
@@ -28,7 +28,7 @@ public class GameJudge: MonoBehaviour
     {
         if (enemy.destroiedEnemy == true)
         {
-            SceneManager.LoadScene("Result");
+            SceneManager.LoadScene("Clear");
         }
     }
 
@@ -40,7 +40,7 @@ public class GameJudge: MonoBehaviour
     {
         if(playercontroller.destroiedPlayer == true)
         {
-            SceneManager.LoadScene("Result");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

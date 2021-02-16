@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     private Image greenGauge;//一本目のHP
     [SerializeField]
     private Image redGauge;//二本目のHP
-
     [SerializeField]
     private GameObject enemyHPGauge;//HPゲージがなくなった時にゲージやフレームごと破壊するため
 
@@ -31,6 +30,21 @@ public class Enemy : MonoBehaviour
 
     public bool destroiedEnemy = false;//破壊されたかの判断に使う
     private GameObject enemy;//HPゲージがなくなった時にオブジェクトごと破壊するため
+
+
+    [SerializeField]
+    private float speed;//移動速度
+    private Vector3 direction;//移動方向
+    private float x;
+    private float y;
+    [SerializeField]
+    private float chargeTime;
+    private float timeCount;
+    private Vector3 playerPosition;
+
+    //private Vector2 minMoveArea;  Mathf.Clampsで作成する
+    //private Vector2 maxMoveArea;
+
 
 
 
@@ -43,6 +57,8 @@ public class Enemy : MonoBehaviour
 
         enemy = GameObject.Find("Enemy");
 
+        RandomDirection();
+
     }
 
 
@@ -50,6 +66,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         //DecreseSliderHP();Slider版HPゲージで使用
+        EnemyMove();
     }
 
 
@@ -63,6 +80,8 @@ public class Enemy : MonoBehaviour
         if(other.CompareTag("PlayerBullet"))
         {
             Destroy(other.gameObject);//弾オブジェクトを破壊
+
+            DecreseGaugeHP();
         }
 
         //if(enemyHP > 0.0f)//０より上なら１減らして、０未満なら破壊 Slider版HPゲージで使用
@@ -76,7 +95,7 @@ public class Enemy : MonoBehaviour
 
 
 
-        DecreseGaugeHP();
+
         
     }
 
@@ -108,7 +127,53 @@ public class Enemy : MonoBehaviour
         {
             destroiedEnemy = true;
             Destroy(enemyHPGauge);
-            Destroy(enemy);       
+            //Destroy(enemy); 
+            enemy.SetActive(false);
         }
     }
+
+
+    /// <summary>
+    /// 方向を定める（改良必要）
+    /// </summary>
+    public void RandomDirection()
+    {
+        x = Random.Range(-1,2);//ランダムに動く方向のｘの範囲、2にしているのはこれ-１以上２未満だから
+        y = Random.Range(-1,2);//ｙの範囲
+        direction = new Vector3(x, y, 0);
+
+
+        //動かないという待機状態をなくしたかったが上手くいってなさそう、
+        //ついでに動く限界範囲になってもその方向を選んでしまったら動いてないように見える
+        //例えば、右端にいるのに方向をｘが１でｙが０を選んでしまったとき
+        if (x==0&&y==0)
+
+        {
+            RandomDirection();
+        }
+
+    }
+
+    /// <summary>
+    /// ランダム移動（改良必要）
+    /// </summary>
+    public void EnemyMove()
+    {
+        timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる
+
+
+        transform.position += speed * direction * Time.deltaTime;//移動
+        playerPosition = transform.position;//変数作らないとtransform.positionをいじれないから
+        playerPosition.x = Mathf.Clamp(playerPosition.x, -2, 2);//ｘの移動範囲、0，0で画面の中心だからそこから把握
+        playerPosition.y = Mathf.Clamp(playerPosition.y, -1, 3);//ｙの移動範囲
+        transform.position = new Vector2(playerPosition.x, playerPosition.y);//範囲を定めて代入
+        
+
+        if(timeCount>chargeTime)//時間を超えたら（何秒か毎に方向変更）
+        {
+            RandomDirection();
+            timeCount = 0;//カウントをリセット
+        }
+    }
+
 }
