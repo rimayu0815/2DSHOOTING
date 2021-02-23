@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private float x;//横移動
     private float y;//縦移動
 
+    private Vector2 playerPosition;
+
     //private Bullet bullet;
 
     [Header("JoyStickの場合")]
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         PlayerMove();
 
     }
@@ -73,7 +76,22 @@ public class PlayerController : MonoBehaviour
            //rb.velocity = new Vector2(x * speed, y * speed);滑ってしまう
 
            Vector2 moveDir = new Vector2(x,y);//速度ベクトルを作成するので、値が０か１になる
-            rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
+           rb.velocity = new Vector2(moveDir.x * speed,moveDir.y * speed);
+
+
+            ///<summary>この下四行のコードでプレイヤーの移動制限を書いたけど上手くいかない（上下のコードを見て調整必要、おそらく下のzero）</summary>
+            //playerPosition = rb.velocity;
+            //playerPosition.x = Mathf.Clamp(playerPosition.x, -2, 2);
+            //playerPosition.y = Mathf.Clamp(playerPosition.y, -1, 1);
+            //transform.position = new Vector2(playerPosition.x, playerPosition.y);
+
+
+            //移動制限　これでとりあえずOK、ただ横端に当たるとちょっと動く
+            rb.position = new Vector2(Mathf.Clamp(rb.position.x, -2, 2),Mathf.Clamp(rb.position.y, -5, -3));
+
+            
+
+
         }
         else
         {

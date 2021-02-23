@@ -40,7 +40,9 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float chargeTime;
     private float timeCount;
-    private Vector3 playerPosition;
+    private Vector3 enemyPosition;
+    private Rigidbody2D rbEnemy; 
+
 
     //private Vector2 minMoveArea;  Mathf.Clampsで作成する
     //private Vector2 maxMoveArea;
@@ -57,7 +59,9 @@ public class Enemy : MonoBehaviour
 
         enemy = GameObject.Find("Enemy");
 
-        RandomDirection();
+        InvokeRepeating("RandomDirection", 4, 1);
+
+        rbEnemy = GameObject.Find("Enemy").GetComponent<Rigidbody2D>();
 
     }
 
@@ -66,7 +70,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         //DecreseSliderHP();Slider版HPゲージで使用
-        EnemyMove();
+        InvokeRepeating("EnemyMove", 4, 1);
+        timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる 　これがUpdateになかったからtimeCountが0にならなかった
+        
+
+
     }
 
 
@@ -109,7 +117,7 @@ public class Enemy : MonoBehaviour
     //}
 
     ///<summary>
-    ///fillAmountでの㏋ゲージ
+    ///fillAmountでHPゲージ
     /// </summary>
     public void DecreseGaugeHP()
     {
@@ -159,20 +167,21 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void EnemyMove()
     {
-        timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる
 
 
-        transform.position += speed * direction * Time.deltaTime;//移動
-        playerPosition = transform.position;//変数作らないとtransform.positionをいじれないから
-        playerPosition.x = Mathf.Clamp(playerPosition.x, -2, 2);//ｘの移動範囲、0，0で画面の中心だからそこから把握
-        playerPosition.y = Mathf.Clamp(playerPosition.y, -1, 3);//ｙの移動範囲
-        transform.position = new Vector2(playerPosition.x, playerPosition.y);//範囲を定めて代入
+        rbEnemy.velocity = new Vector2(direction.x, direction.y)*speed;　//こっちも加速していく　新しく作ったけど改良必要  
+        //transform.position += speed * direction *Time.deltaTime;//移動  加速していく
+
+        enemyPosition = transform.position;//変数作らないとtransform.positionをいじれないから
+        enemyPosition.x = Mathf.Clamp(enemyPosition.x, -2, 2);//ｘの移動範囲、0，0で画面の中心だからそこから把握
+        enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1, 3);//ｙの移動範囲
+        transform.position = new Vector2(enemyPosition.x, enemyPosition.y);//範囲を定めて代入
         
 
         if(timeCount>chargeTime)//時間を超えたら（何秒か毎に方向変更）
         {
-            RandomDirection();
             timeCount = 0;//カウントをリセット
+            RandomDirection();
         }
     }
 

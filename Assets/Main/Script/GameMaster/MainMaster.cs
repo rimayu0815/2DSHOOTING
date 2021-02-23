@@ -2,11 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class MainMaster: MonoBehaviour
 {
     public Enemy enemy;//Enemyが破壊されたという判定を取得するため
     public PlayerController playercontroller;//Playerが破壊されたという判定を取得するため
+
+    [SerializeField]
+    private float startTimer;
+    [SerializeField]
+    private Text timerLabel;
+    [SerializeField]
+    private GameObject timerlabel;
+    [SerializeField]
+    private GameObject startText;
+    //private bool starttext = false;
+
+    [SerializeField]
+    private float gameTimer;
+    [SerializeField]
+    private Text gameTimerLabel;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +36,9 @@ public class MainMaster: MonoBehaviour
     {
         isClear();
         isGameOver();
+
+        StartTimer();
+        GameTimer();
     }
 
     /// <summary>
@@ -42,5 +62,53 @@ public class MainMaster: MonoBehaviour
         {
             SceneManager.LoadScene("GameOver");
         }
+    }
+
+    public void StartTimer()
+    {
+        startTimer -= Time.deltaTime;
+        
+        if(startTimer < 1)
+        {
+            timerlabel.SetActive(false);
+
+            startText.SetActive(true);
+        }
+        if(startTimer <0)
+        {
+            startTimer = 0;
+
+            startText.SetActive(false);
+
+           //Destroy(startText);
+
+            //starttext = true;
+
+            //if(starttext == true)
+            //{
+            //    startText.text = "Start!!";
+            //    Destroy(startText, 2);
+            //}
+
+
+        }
+
+        timerLabel.text = "" + startTimer.ToString("0");
+    }
+
+    public void GameTimer()
+    {
+        gameTimer -= Time.deltaTime;
+
+        if (gameTimer < 0)
+        {
+            gameTimer = 0;
+
+            SceneManager.LoadScene("GameOver");
+
+
+        }
+
+        gameTimerLabel.text = "" + gameTimer.ToString("0");
     }
 }

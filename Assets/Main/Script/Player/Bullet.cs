@@ -21,6 +21,10 @@ public class Bullet : MonoBehaviour
 
     public Transform playertran;// playerの位置を参照
 
+    [SerializeField]
+    private float bulletcharge;//連打で撃てないようにする
+    private float bullettimeCount;
+
     //public GameObject canvas;
 
     //private Vector3 startPosition;
@@ -37,13 +41,22 @@ public class Bullet : MonoBehaviour
 
         //rbBullet = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
 
+        //Invoke("Fire", 4);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        Fire();
+        bullettimeCount += Time.deltaTime;//上手くできていない
+        
+        if (bullettimeCount > bulletcharge)
+        {
+            bullettimeCount = 0;
+            Fire();
+        }
+
+        Debug.Log(bullettimeCount);
     }
 
 
@@ -52,25 +65,29 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public void Fire()
     {
+        Debug.Log("Fire");
+
         if (Input.GetMouseButtonDown(1))//右クリックしたら
-        {
-            GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
-
-            //Debug.Log(transform.position);
-            rbBullet = bullet.GetComponent<Rigidbody2D>();
+            {
 
 
-            //bullet.transform.SetParent(canvas.transform, false);
+                GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
 
-            //transform.position = startPosition;
+                //Debug.Log(transform.position);
+                rbBullet = bullet.GetComponent<Rigidbody2D>();
 
-            //rbBullet.AddForce(transform.up * speed);
+
+                //bullet.transform.SetParent(canvas.transform, false);
+
+                //transform.position = startPosition;
+
+                //rbBullet.AddForce(transform.up * speed);
+
+                rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
+
+                Destroy(bullet, 2.0f);
+            }
         
-            rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
-
-            Destroy(bullet,2.0f);
-        }
-
     }
 
     //public void OnCollisionEnter2D(Collision2D col)
