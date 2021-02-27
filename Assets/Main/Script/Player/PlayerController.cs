@@ -57,6 +57,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void Update()
+    {
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f), Mathf.Clamp(transform.position.y, -4.42f, -3));//これでちゃんと範囲で止まる
+
+    }
+
     /// <summary>
     /// Playerの移動操作
     /// </summary>
@@ -86,8 +92,8 @@ public class PlayerController : MonoBehaviour
             //transform.position = new Vector2(playerPosition.x, playerPosition.y);
 
 
-            //移動制限　これでとりあえずOK、ただ横端に当たるとちょっと動く
-            rb.position = new Vector2(Mathf.Clamp(rb.position.x, -2, 2),Mathf.Clamp(rb.position.y, -5, -3));
+            //移動制限　これでとりあえずOK、ただ横端に当たるとちょこっと範囲外に動く
+            //transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f),Mathf.Clamp(transform.position.y, -4.42f, -3));
 
             
 

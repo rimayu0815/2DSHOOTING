@@ -19,8 +19,8 @@ public class Enemy : MonoBehaviour
 
 
 
-    [SerializeField]
-    private Image greenGauge;//一本目のHP
+    
+    public Image greenGauge;//一本目のHP
     [SerializeField]
     private Image redGauge;//二本目のHP
     [SerializeField]
@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
 
         enemy = GameObject.Find("Enemy");
 
-        InvokeRepeating("RandomDirection", 4, 1);
+        //InvokeRepeating("RandomDirection", 4, 1);
 
         rbEnemy = GameObject.Find("Enemy").GetComponent<Rigidbody2D>();
 
@@ -72,8 +72,12 @@ public class Enemy : MonoBehaviour
         //DecreseSliderHP();Slider版HPゲージで使用
         InvokeRepeating("EnemyMove", 4, 1);
         timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる 　これがUpdateになかったからtimeCountが0にならなかった
-        
 
+        if (timeCount > chargeTime)//時間を超えたら（何秒か毎に方向変更）
+        {
+            timeCount = 0;//カウントをリセット
+            RandomDirection();
+        }
 
     }
 
@@ -173,16 +177,12 @@ public class Enemy : MonoBehaviour
         //transform.position += speed * direction *Time.deltaTime;//移動  加速していく
 
         enemyPosition = transform.position;//変数作らないとtransform.positionをいじれないから
-        enemyPosition.x = Mathf.Clamp(enemyPosition.x, -2, 2);//ｘの移動範囲、0，0で画面の中心だからそこから把握
-        enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1, 3);//ｙの移動範囲
+        enemyPosition.x = Mathf.Clamp(enemyPosition.x, -1.8f, 1.8f);//ｘの移動範囲、0，0で画面の中心だからそこから把握
+        enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1.4f, 3.5f);//ｙの移動範囲
         transform.position = new Vector2(enemyPosition.x, enemyPosition.y);//範囲を定めて代入
         
 
-        if(timeCount>chargeTime)//時間を超えたら（何秒か毎に方向変更）
-        {
-            timeCount = 0;//カウントをリセット
-            RandomDirection();
-        }
+
     }
 
 }

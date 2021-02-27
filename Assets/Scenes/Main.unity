@@ -205,7 +205,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 146183417}
-  - component: {fileID: 146183418}
   - component: {fileID: 146183420}
   - component: {fileID: 146183419}
   m_Layer: 5
@@ -237,23 +236,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -900}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &146183418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146183416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3138410d5fe9b5d48b25c014cd5eb6aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  BulletPrefab: {fileID: 4407905638439725497, guid: c8a347c97290c3840ad4b1035320c9ad, type: 3}
-  x: 0
-  playertran: {fileID: 0}
-  bulletcharge: 5
 --- !u!114 &146183419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,6 +379,8 @@ RectTransform:
   - {fileID: 588147240}
   - {fileID: 1579169555}
   - {fileID: 1200907157}
+  - {fileID: 1607695610}
+  - {fileID: 911822641}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -839,8 +823,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a25743fac592eff42b226b8fa3ff55c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 500
   EnemyBulletPrefab: {fileID: 4231910386014565014, guid: a6634c9e5f4eae5439c3cc5a7280b792, type: 3}
+  enemybulletTran: {fileID: 1607695610}
+  playercontroller: {fileID: 146183419}
+  enemy: {fileID: 1910789038}
+--- !u!1 &911822640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911822641}
+  m_Layer: 5
+  m_Name: BulletTran
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &911822641
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911822640}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 491841791}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1038528507
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,8 +914,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_Color: {r: 0, g: 0, b: 0, a: 0.19607843}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1082,7 +1104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1540,7 +1562,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '3
+  m_Text: '5
 
 '
 --- !u!222 &1579169554
@@ -1662,6 +1684,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604821400}
   m_CullTransparentMesh: 0
+--- !u!1 &1607695609
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1607695610}
+  m_Layer: 5
+  m_Name: EnemyBulletTran
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1607695610
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607695609}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 491841791}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1681448638
 GameObject:
   m_ObjectHideFlags: 0
@@ -1785,11 +1842,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3138410d5fe9b5d48b25c014cd5eb6aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 500
   BulletPrefab: {fileID: 4407905638439725497, guid: c8a347c97290c3840ad4b1035320c9ad, type: 3}
   x: 0
   playertran: {fileID: 146183417}
   bulletcharge: 0
+  bulletTran: {fileID: 911822641}
 --- !u!1 &1755269127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1917,7 +1975,7 @@ MonoBehaviour:
   timerLabel: {fileID: 1579169553}
   timerlabel: {fileID: 1579169552}
   startText: {fileID: 1200907156}
-  gameTimer: 10
+  gameTimer: 60
   gameTimerLabel: {fileID: 1244986922}
 --- !u!4 &1809794961
 Transform:

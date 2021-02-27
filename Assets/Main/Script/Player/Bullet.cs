@@ -25,6 +25,11 @@ public class Bullet : MonoBehaviour
     private float bulletcharge;//連打で撃てないようにする
     private float bullettimeCount;
 
+    private bool gamestart = false;
+
+    [SerializeField]
+    private Transform bulletTran;
+
     //public GameObject canvas;
 
     //private Vector3 startPosition;
@@ -43,6 +48,8 @@ public class Bullet : MonoBehaviour
 
         //Invoke("Fire", 4);
 
+        StartCoroutine(GameStart());
+
     }
 
     // Update is called once per frame
@@ -52,11 +59,10 @@ public class Bullet : MonoBehaviour
         
         if (bullettimeCount > bulletcharge)
         {
-            bullettimeCount = 0;
             Fire();
         }
 
-        Debug.Log(bullettimeCount);
+        //Debug.Log(bullettimeCount);
     }
 
 
@@ -65,29 +71,45 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public void Fire()
     {
-        Debug.Log("Fire");
+        //Debug.Log("Fire");
 
-        if (Input.GetMouseButtonDown(1))//右クリックしたら
-            {
+        if (Input.GetMouseButtonDown(1) && gamestart == true)//右クリックしたら
+        {
+
+            bullettimeCount = 0;
+
+            GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
+
+            bullet.transform.SetParent(bulletTran);
 
 
-                GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
+            //Debug.Log(transform.position);
 
-                //Debug.Log(transform.position);
-                rbBullet = bullet.GetComponent<Rigidbody2D>();
+            rbBullet = bullet.GetComponent<Rigidbody2D>();
+
+            //bullet.transform.SetParent(canvas.transform, false);
+
+            //transform.position = startPosition;
+
+            rbBullet.AddForce(transform.up * speed);
 
 
-                //bullet.transform.SetParent(canvas.transform, false);
+            //rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
 
-                //transform.position = startPosition;
+            Destroy(bullet, 2.0f);
 
-                //rbBullet.AddForce(transform.up * speed);
 
-                rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
-
-                Destroy(bullet, 2.0f);
-            }
+        }
         
+    }
+
+    private IEnumerator GameStart()
+    {
+        
+        yield return new WaitForSeconds(4.0f);
+
+        gamestart = true;
+
     }
 
     //public void OnCollisionEnter2D(Collision2D col)
@@ -98,4 +120,7 @@ public class Bullet : MonoBehaviour
 
     //    }
     //}
+
+
+
 }
