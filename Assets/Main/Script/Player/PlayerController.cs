@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     public bool destroiedPlayer = false;//GameOverやクリア等の判定
     private GameObject player;//HPゲージがなくなった時にオブジェクトごと破壊するため
 
+
+    [SerializeField]
+    private SimpleTouchController simple;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,7 +74,10 @@ public class PlayerController : MonoBehaviour
     {
         if(isJoyStick)
         {
-            //
+            Vector2 pos = simple .GetTouchPosition;
+
+            x = pos.x;
+            y = pos.y;
         }
         else 
         {
