@@ -84,7 +84,7 @@ public class EnemyBullet : MonoBehaviour
 
             direction = direction.normalized;
 
-            direction = new Vector2(direction.x - 0.1f, direction.y - 0.1f);
+            direction = new Vector2(direction.x - 0.3f, direction.y - 0.3f);
 
             enemyrbBullet1.AddForce(direction * speed);
 
@@ -101,7 +101,7 @@ public class EnemyBullet : MonoBehaviour
 
             direction = direction.normalized;
 
-            direction = new Vector2(direction.x + 0.1f, direction.y + 0.1f);
+            direction = new Vector2(direction.x + 0.3f, direction.y + 0.3f);
 
             enemyrbBullet2.AddForce(direction * speed);
 
