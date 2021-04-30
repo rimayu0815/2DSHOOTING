@@ -1565,7 +1565,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '5
+  m_Text: '3
 
 '
 --- !u!222 &1579169554
@@ -1646,9 +1646,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1, y: -9.2}
+  m_Offset: {x: -8.3967495, y: 21.414013}
   serializedVersion: 2
-  m_Radius: 20
+  m_Radius: 12.787288
 --- !u!114 &1604821404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1974,7 +1974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1910789038}
   playercontroller: {fileID: 146183419}
-  startTimer: 5
+  startTimer: 3
   timerLabel: {fileID: 1579169553}
   timerlabel: {fileID: 1579169552}
   startText: {fileID: 1200907156}
@@ -2118,7 +2118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -520, y: 800}
+  m_AnchoredPosition: {x: 0, y: 800}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!50 &1910789037

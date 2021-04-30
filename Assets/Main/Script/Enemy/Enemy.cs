@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         //DecreseSliderHP();Slider版HPゲージで使用
-        InvokeRepeating("EnemyMove", 4, 1);
+        InvokeRepeating("EnemyMove", 3, 1);
         timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる 　これがUpdateになかったからtimeCountが0にならなかった
 
         if (timeCount > chargeTime)//時間を超えたら（何秒か毎に方向変更）
@@ -141,6 +141,8 @@ public class Enemy : MonoBehaviour
             Destroy(enemyHPGauge);
             //Destroy(enemy); 
             enemy.SetActive(false);
+
+
         }
     }
 

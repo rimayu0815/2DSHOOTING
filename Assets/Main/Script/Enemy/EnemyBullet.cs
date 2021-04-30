@@ -26,7 +26,7 @@ public class EnemyBullet : MonoBehaviour
     // Start is calledd before the first frame update
     void Start()
     {
-        InvokeRepeating("enemyFire", 4, 1);//enemyFireメソッドをゲームスタート時は4秒後に生成し、その後は１秒間隔で生成　　3，2，1，スタートするため4秒後
+        InvokeRepeating("enemyFire", 3, 1);//enemyFireメソッドをゲームスタート時は4秒後に生成し、その後は１秒間隔で生成　　3，2，1，スタートするため4秒後
 
 
         InvokeRepeating("TripleenemyFire",4,1);

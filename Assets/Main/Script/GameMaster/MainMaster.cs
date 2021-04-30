@@ -34,11 +34,21 @@ public class MainMaster: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isClear();
-        isGameOver();
+        Invoke("GameTimer", 3.0f);
 
         StartTimer();
-        GameTimer();
+        //GameTimer();
+
+
+        if (enemy.destroiedEnemy == true)
+        {
+            Invoke("isClear", 1.5f);
+        }
+        if (playercontroller.destroiedPlayer == true)
+        {
+            Invoke("isGameOver", 1.5f);
+        }
+
     }
 
     /// <summary>
@@ -46,10 +56,8 @@ public class MainMaster: MonoBehaviour
     /// </summary>
     public void isClear()
     {
-        if (enemy.destroiedEnemy == true)
-        {
-            SceneManager.LoadScene("Clear");
-        }
+        SceneManager.LoadScene("Clear");
+
     }
 
 
@@ -58,10 +66,8 @@ public class MainMaster: MonoBehaviour
     /// </summary>
     public void isGameOver()
     {
-        if(playercontroller.destroiedPlayer == true)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        SceneManager.LoadScene("GameOver");
+
     }
 
     public void StartTimer()

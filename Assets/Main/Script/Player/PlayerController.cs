@@ -167,6 +167,8 @@ public class PlayerController : MonoBehaviour
             Destroy(playerHPGauge);
             //Destroy(player);
             player.SetActive(false);
+
+
         }
     }
 }
