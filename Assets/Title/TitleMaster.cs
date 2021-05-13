@@ -7,12 +7,22 @@ using UnityEngine.UI;
 
 public class TitleMaster : MonoBehaviour
 {
-    [SerializeField]
+    //[SerializeField]
     //private Canvas textPress;
+
+    [SerializeField]
+    private AudioClip audioClip1;
+
+    private AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = gameObject.GetComponent<AudioSource>();
+
+        audioSource.clip = audioClip1;
+
+        audioSource.Play();
     }
 
     // Update is called once per frame
