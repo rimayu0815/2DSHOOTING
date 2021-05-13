@@ -99,7 +99,8 @@ public class MainMaster: MonoBehaviour
 
         }
 
-        timerLabel.text = "" + startTimer.ToString("0");
+        //timerLabel.text = "" + startTimer.ToString("0");
+        timerLabel.text = "Ready";//Readyに変更
     }
 
     public void GameTimer()
