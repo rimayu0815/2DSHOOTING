@@ -31,8 +31,11 @@ public class PlayerController : MonoBehaviour
     //private GameObject imageP;
     [SerializeField]
     private float playerMaxHP;//HPの最大値
+
     [SerializeField]
-    private float damage;//Enemyからのダメージ　　ここを敵で管理できるように変更した方がいい
+    private Enemy enemy;//Enemyからの攻撃によるダメージを取ってくるため　　
+    public float plaAttack;//Playerの攻撃力
+
     [SerializeField]
     private GameObject playerHPGauge;//HPゲージがなくなった時にゲージやフレームごと破壊するため
 
@@ -43,6 +46,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SimpleTouchController simple;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
         player = GameObject.Find("Player");
 
-        //imageP = GameObject.Find("ImageP");
     }
 
     // Update is called once per frame
@@ -72,14 +76,15 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayerMove()
     {
-        if(isJoyStick)
+
+        if (isJoyStick)
         {
-            Vector2 pos = simple .GetTouchPosition;
+            Vector2 pos = simple.GetTouchPosition;
 
             x = pos.x;
             y = pos.y;
         }
-        else 
+        else
         {
             x = Input.GetAxis("Horizontal");
             y = Input.GetAxis("Vertical");
@@ -127,19 +132,6 @@ public class PlayerController : MonoBehaviour
             DecreseGaugePlayerHP();
 
         }
-        //Destroy(other.gameObject);//弾オブジェクトを破壊
-
-        //if(enemyHP > 0.0f)//０より上なら１減らして、０未満なら破壊 Slider版HPゲージで使用
-        //{
-        //    enemyHP -= damage;
-        //}
-        //else
-        //{
-        //    Destroy(this.gameObject);
-        //}
-
-
-
 
     }
 
@@ -151,7 +143,7 @@ public class PlayerController : MonoBehaviour
     {
         if (greenGauge.fillAmount > 0.0f)
         {
-            greenGauge.fillAmount -= damage / playerMaxHP;
+            greenGauge.fillAmount -= enemy.eneAttack / playerMaxHP;
         }
         if(greenGauge.fillAmount <=0.5f)
         {

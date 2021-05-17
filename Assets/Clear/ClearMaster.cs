@@ -6,11 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class ClearMaster: MonoBehaviour
 {
+    private int[] cleaNum;
+
+    [SerializeField]
+    private MainMaster mainMas;
+
     // Start is called before the first frame update
     void Start()
     {
-
-
+        cleaNum = new int[20];//作りかけ
     }
 
     // Update is called once per frame
@@ -26,5 +30,6 @@ public class ClearMaster: MonoBehaviour
     {
         SceneManager.LoadScene("Main");
     }
+
 
 }

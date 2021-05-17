@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Bullet : MonoBehaviour
 {
@@ -16,53 +18,56 @@ public class Bullet : MonoBehaviour
 
     public GameObject BulletPrefab;
 
-    [SerializeField]
-    private float x;
-
     public Transform playertran;// playerの位置を参照
 
     [SerializeField]
     private float bulletcharge;//連打で撃てないようにする
-    private float bullettimeCount;
+    private float timer;
+
+    private float bulletCount;
+    public float bulletMaxCount;
 
     private bool gamestart = false;
 
     [SerializeField]
     private Transform bulletTran;
 
-    //public GameObject canvas;
 
-    //private Vector3 startPosition;
+    public bool Attackking  = true;
+
+    /// <summary>
+    ///プレイ画面左下の姿勢変更ゲージを作成 
+    /// </summary> /// 
+    public GameObject MP;//下のpostureGaugeにデータを入れるため
+    public Image mpGauge;//fillAmountを使うためにデータを入れる
+    public float countTime = 2.0f;//これでゲージの減りを調整
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //canvas = GameObject.Find("Canvas");
-
-        //startPosition = transform.position;
-
-
-
-        //rbBullet = GameObject.Find("Bullet").GetComponent<Rigidbody2D>();
-
-        //Invoke("Fire", 4);
-
         StartCoroutine(GameStart());
 
+        bulletCount = bulletMaxCount;
+        MP = GameObject.Find("greenGauge");
+        mpGauge = MP.GetComponent<Image>();
+        mpGauge.fillAmount = 1.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        bullettimeCount += Time.deltaTime;//上手くできていない
-        
-        if (bullettimeCount > bulletcharge)
+        timer += Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(1) && gamestart == true && timer > bulletcharge && bulletCount > 0 && Attackking == true)//右クリックしたら
         {
             Fire();
-        }
 
-        //Debug.Log(bullettimeCount);
+        }
+        if (Attackking == false)
+        {
+            AddMP();
+        }
     }
 
 
@@ -71,36 +76,23 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public void Fire()
     {
-        //Debug.Log("Fire");
+        timer = 0;
 
-        if (Input.GetMouseButtonDown(1) && gamestart == true)//右クリックしたら
-        {
+        bulletCount -= 1f;
+        DecreseMP();
 
-            bullettimeCount = 0;
+        GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
 
-            GameObject bullet = Instantiate(BulletPrefab, playertran);//弾を生成
-
-            bullet.transform.SetParent(bulletTran);
+        bullet.transform.SetParent(bulletTran);
 
 
-            //Debug.Log(transform.position);
+        rbBullet = bullet.GetComponent<Rigidbody2D>();
 
-            rbBullet = bullet.GetComponent<Rigidbody2D>();
+        rbBullet.AddForce(transform.up * speed);
 
-            //bullet.transform.SetParent(canvas.transform, false);
-
-            //transform.position = startPosition;
-
-            rbBullet.AddForce(transform.up * speed);
+        Destroy(bullet, 2.0f);
 
 
-            //rbBullet.velocity = new Vector2(rbBullet.velocity.x, speed);//弾の方向指定
-
-            Destroy(bullet, 2.0f);
-
-
-        }
-        
     }
 
     private IEnumerator GameStart()
@@ -112,15 +104,27 @@ public class Bullet : MonoBehaviour
 
     }
 
-    //public void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    if(col.gameObject.tag == "Enemy")
-    //    {
-    //        Destroy(this.gameObject);
+    private void DecreseMP()
+    {
+        Debug.Log(mpGauge.fillAmount);
+        mpGauge.fillAmount -= 1 / bulletMaxCount;
+        if (mpGauge.fillAmount <= 0.0f)
+        {
+            mpGauge.fillAmount = 0.0f;
+            Attackking = false;
+            bulletCount = bulletMaxCount;
+        }
 
-    //    }
-    //}
-
+    }
+    private void AddMP()
+    {
+        mpGauge.fillAmount += 1.0f / countTime * Time.deltaTime;
+        if (mpGauge.fillAmount >= 1.0f)
+        {
+            mpGauge.fillAmount = 1.0f;
+            Attackking = true;
+        }
+    }
 
 
 }

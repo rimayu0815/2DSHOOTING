@@ -25,6 +25,8 @@ public class MainMaster: MonoBehaviour
     [SerializeField]
     private Text gameTimerLabel;
 
+    public int level;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,8 @@ public class MainMaster: MonoBehaviour
     /// </summary>
     public void isClear()
     {
+        level++;
+
         SceneManager.LoadScene("Clear");
 
     }
@@ -66,6 +70,8 @@ public class MainMaster: MonoBehaviour
     /// </summary>
     public void isGameOver()
     {
+        level = 0;
+
         SceneManager.LoadScene("GameOver");
 
     }
@@ -100,7 +106,7 @@ public class MainMaster: MonoBehaviour
         }
 
         //timerLabel.text = "" + startTimer.ToString("0");
-        timerLabel.text = "Ready";//Readyに変更
+        timerLabel.text = "Ready…";//Readyに変更
     }
 
     public void GameTimer()

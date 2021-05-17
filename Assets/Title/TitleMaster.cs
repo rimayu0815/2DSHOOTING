@@ -15,14 +15,16 @@ public class TitleMaster : MonoBehaviour
 
     private AudioSource audioSource;
 
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
 
-        audioSource.clip = audioClip1;
+        //audioSource.clip = audioClip1;
 
-        audioSource.Play();
+        //audioSource.Play();
+
     }
 
     // Update is called once per frame

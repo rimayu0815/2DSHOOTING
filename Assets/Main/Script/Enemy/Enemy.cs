@@ -9,8 +9,11 @@ public class Enemy : MonoBehaviour
     private float enemyHP;//Sliderで使っているEnemyのHP　　　　上か下どちらかでいい
     [SerializeField]
     private float enemyMaxHP;//FillAmountで使っているEnemyのHP
+
+
+    public float eneAttack;//エネミーの攻撃力
     [SerializeField]
-    private float damage;//Playerからのダメージ　　ここを敵で管理できるように変更した方がいい
+    private PlayerController playerCont;//playerからの攻撃によるダメージを撮ってくるため
 
 
 
@@ -127,11 +130,11 @@ public class Enemy : MonoBehaviour
     {
         if(greenGauge.fillAmount>0.0f)
         {
-            greenGauge.fillAmount -= damage / enemyMaxHP;
+            greenGauge.fillAmount -= playerCont.plaAttack / enemyMaxHP;
         }
         else if(greenGauge.fillAmount <=0)
         {
-            redGauge.fillAmount -= damage / enemyMaxHP;
+            redGauge.fillAmount -= playerCont.plaAttack / enemyMaxHP;
 
             //Debug.Log(redGauge.fillAmount);
         }
