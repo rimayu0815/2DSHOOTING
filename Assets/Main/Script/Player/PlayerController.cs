@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f), Mathf.Clamp(transform.position.y, -4.42f, -3));//これでちゃんと範囲で止まる
+        transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f), Mathf.Clamp(transform.position.y, -3.9f, -2.5f));//これでちゃんと範囲で止まる
 
     }
 

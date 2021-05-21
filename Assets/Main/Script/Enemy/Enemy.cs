@@ -183,7 +183,7 @@ public class Enemy : MonoBehaviour
 
         enemyPosition = transform.position;//変数作らないとtransform.positionをいじれないから
         enemyPosition.x = Mathf.Clamp(enemyPosition.x, -1.8f, 1.8f);//ｘの移動範囲、0，0で画面の中心だからそこから把握
-        enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1.4f, 3.5f);//ｙの移動範囲
+        enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1f, 4.0f);//ｙの移動範囲
         transform.position = new Vector2(enemyPosition.x, enemyPosition.y);//範囲を定めて代入
         
 

@@ -118,7 +118,7 @@ public class Bullet : MonoBehaviour
     }
     private void AddMP()
     {
-        mpGauge.fillAmount += 1.0f / countTime * Time.deltaTime;
+        mpGauge.fillAmount += 0.5f / countTime * Time.deltaTime;
         if (mpGauge.fillAmount >= 1.0f)
         {
             mpGauge.fillAmount = 1.0f;
