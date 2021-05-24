@@ -11,17 +11,19 @@ public class TitleMaster : MonoBehaviour
     //private Canvas textPress;
 
     [SerializeField]
-    private AudioClip audioClip1;
+    private AudioClip audioClip;
 
     private AudioSource audioSource;
 
+    [SerializeField]
+    private ButtonScript button;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
 
-        //audioSource.clip = audioClip1;
+        //audioSource.clip = audioClip;
 
         //audioSource.Play();
 
@@ -30,8 +32,9 @@ public class TitleMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))//左クリックしたら
+        if(button.buttonStart == true)//左クリックしたら
         {
+            button.buttonStart = false;
             SeaneChange();
         }
     }

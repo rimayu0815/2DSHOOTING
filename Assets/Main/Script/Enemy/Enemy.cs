@@ -44,18 +44,28 @@ public class Enemy : MonoBehaviour
     private float chargeTime;
     private float timeCount;
     private Vector3 enemyPosition;
-    private Rigidbody2D rbEnemy; 
+    private Rigidbody2D rbEnemy;
 
 
     //private Vector2 minMoveArea;  Mathf.Clampsで作成する
     //private Vector2 maxMoveArea;
 
 
+    public AudioClip EnestartSound;
+    private AudioSource audioSource;
+    private float seconds;
+    public bool soundOk = false;
+
+    [SerializeField]
+    private GameObject enePanel;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
+
+
         //enemyHP = 30.0f;SerializeFieldを書いてInspectorから変更できるようにする 　HPGaugeで使いたいからpublicに変更
 
         //enemySlider = GameObject.Find("EnemySlider").GetComponent<Slider>();//Slider版のHPゲージ
@@ -66,12 +76,14 @@ public class Enemy : MonoBehaviour
 
         rbEnemy = GameObject.Find("Enemy").GetComponent<Rigidbody2D>();
 
+        enePanel.SetActive(false);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        
         //DecreseSliderHP();Slider版HPゲージで使用
         InvokeRepeating("EnemyMove", 3, 1);
         timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる 　これがUpdateになかったからtimeCountが0にならなかった
@@ -82,8 +94,16 @@ public class Enemy : MonoBehaviour
             RandomDirection();
         }
 
-    }
+        seconds += Time.deltaTime;
+        if (!soundOk &&seconds >= 1f )
+        {
+            enePanel.SetActive(true);
+            audioSource.PlayOneShot(EnestartSound);
+            soundOk = true;
+        }
 
+        
+    }
 
 
     /// <summary>
@@ -185,9 +205,6 @@ public class Enemy : MonoBehaviour
         enemyPosition.x = Mathf.Clamp(enemyPosition.x, -1.8f, 1.8f);//ｘの移動範囲、0，0で画面の中心だからそこから把握
         enemyPosition.y = Mathf.Clamp(enemyPosition.y, -1f, 4.0f);//ｙの移動範囲
         transform.position = new Vector2(enemyPosition.x, enemyPosition.y);//範囲を定めて代入
-        
-
-
     }
 
 }

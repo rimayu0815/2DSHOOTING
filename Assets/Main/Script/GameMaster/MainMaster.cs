@@ -36,7 +36,6 @@ public class MainMaster: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Invoke("GameTimer", 3.0f);
 
         StartTimer();
         //GameTimer();
@@ -92,7 +91,7 @@ public class MainMaster: MonoBehaviour
 
             startText.SetActive(false);
 
-           //Destroy(startText);
+            //Destroy(startText);
 
             //starttext = true;
 
@@ -102,7 +101,7 @@ public class MainMaster: MonoBehaviour
             //    Destroy(startText, 2);
             //}
 
-
+            GameTimer();
         }
 
         //timerLabel.text = "" + startTimer.ToString("0");

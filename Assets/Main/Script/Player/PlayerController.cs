@@ -42,19 +42,30 @@ public class PlayerController : MonoBehaviour
     public bool destroiedPlayer = false;//GameOverやクリア等の判定
     private GameObject player;//HPゲージがなくなった時にオブジェクトごと破壊するため
 
-
     [SerializeField]
     private SimpleTouchController simple;
 
+    public AudioClip EnestartSound;
+    private AudioSource audioSource;
+
+
+    [SerializeField]
+    private GameObject plaPanel;
+    [SerializeField]
+    private Enemy getEnemy;
+    public bool getSound = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
+
         rb = GetComponent<Rigidbody2D>();
 
         player = GameObject.Find("Player");
 
+        plaPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -69,6 +80,10 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f), Mathf.Clamp(transform.position.y, -3.9f, -2.5f));//これでちゃんと範囲で止まる
 
+        if(getEnemy.soundOk == true)
+        {
+            StartCoroutine("Introduct");
+        }
     }
 
     /// <summary>
@@ -106,9 +121,6 @@ public class PlayerController : MonoBehaviour
 
             //移動制限　これでとりあえずOK、ただ横端に当たるとちょこっと範囲外に動く
             //transform.position = new Vector2(Mathf.Clamp(transform.position.x, -2.2f, 2.2f),Mathf.Clamp(transform.position.y, -4.42f, -3));
-
-            
-
 
         }
         else
@@ -162,5 +174,17 @@ public class PlayerController : MonoBehaviour
 
 
         }
+    }
+
+    private IEnumerator Introduct()
+    {
+        yield return new WaitForSeconds(2.0f);
+        if(!getSound)
+        {
+            audioSource.PlayOneShot(EnestartSound);
+            plaPanel.SetActive(true);
+            getSound = true;
+        }
+
     }
 }
