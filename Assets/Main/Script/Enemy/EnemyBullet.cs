@@ -23,13 +23,15 @@ public class EnemyBullet : MonoBehaviour
 
     private Vector2 direction;
 
+    [SerializeField]
+    private MainMaster mainMaster;
+
+    private float timeCount;
+
     // Start is calledd before the first frame update
     void Start()
     {
-        InvokeRepeating("enemyFire", 3, 1);//enemyFireメソッドをゲームスタート時は4秒後に生成し、その後は１秒間隔で生成　　3，2，1，スタートするため4秒後
 
-
-        InvokeRepeating("TripleenemyFire",4,1);
     }
 
     // Update is called once per frame
@@ -37,6 +39,14 @@ public class EnemyBullet : MonoBehaviour
     {
         //enemyFire();
 
+        timeCount += Time.deltaTime;
+
+        if (mainMaster.start ==true)
+        {
+            enemyFire();
+
+            TripleenemyFire();
+        }
 
     }
 
@@ -46,33 +56,44 @@ public class EnemyBullet : MonoBehaviour
     /// </summary>
     public void enemyFire()
     {
-        enemybullet = Instantiate(EnemyBulletPrefab, transform);//Prefabを生成
-
-        enemybullet.transform.SetParent(enemybulletTran);
-
-        enemyrbBullet = enemybullet.GetComponent<Rigidbody2D>();
-
-        direction = playercontroller.transform.position - transform.position;
-
-        direction = direction.normalized;
-
-        enemyrbBullet.AddForce(direction * speed);
-        //enemyrbBullet.velocity = new Vector2(0, -speed);//弾の方向を指定
-
-        Destroy(enemybullet, 2.0f);
-
-        if(enemy.greenGauge.fillAmount <= 0)
+        if(timeCount > 3 )
         {
-            enemybullet.SetActive(false);
+
+            timeCount = 0;
+
+            enemybullet = Instantiate(EnemyBulletPrefab, transform);//Prefabを生成
+
+            enemybullet.transform.SetParent(enemybulletTran);
+
+            enemyrbBullet = enemybullet.GetComponent<Rigidbody2D>();
+
+            direction = playercontroller.transform.position - transform.position;
+
+            direction = direction.normalized;
+
+            enemyrbBullet.AddForce(direction * speed);
+            //enemyrbBullet.velocity = new Vector2(0, -speed);//弾の方向を指定
+
+            Destroy(enemybullet, 2.0f);
+
+            if (enemy.greenGauge.fillAmount <= 0)
+            {
+                enemybullet.SetActive(false);
+            }
         }
+
     }
 
     public void TripleenemyFire()//に送る
                                  //上のUpdateメソッドを参考に作った
                                  //イメージは三方向に球が飛んでいく
     {
-        if (enemy.greenGauge.fillAmount <= 0)
+        if (enemy.greenGauge.fillAmount <= 0 &&timeCount >3)
         {
+
+            Debug.Log("0");
+
+            timeCount = 0;
 
             GameObject enemybullet1 = Instantiate(EnemyBulletPrefab, transform);
 

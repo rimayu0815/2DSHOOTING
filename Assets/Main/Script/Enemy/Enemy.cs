@@ -47,23 +47,17 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rbEnemy;
 
 
+    [SerializeField]
+    private MainMaster mainMaster;
+
     //private Vector2 minMoveArea;  Mathf.Clampsで作成する
     //private Vector2 maxMoveArea;
-
-
-    public AudioClip EnestartSound;
-    private AudioSource audioSource;
-    private float seconds;
-    public bool soundOk = false;
-
-    [SerializeField]
-    private GameObject enePanel;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
+
 
 
         //enemyHP = 30.0f;SerializeFieldを書いてInspectorから変更できるようにする 　HPGaugeで使いたいからpublicに変更
@@ -76,7 +70,7 @@ public class Enemy : MonoBehaviour
 
         rbEnemy = GameObject.Find("Enemy").GetComponent<Rigidbody2D>();
 
-        enePanel.SetActive(false);
+
     }
 
 
@@ -88,19 +82,13 @@ public class Enemy : MonoBehaviour
         InvokeRepeating("EnemyMove", 3, 1);
         timeCount += Time.deltaTime;//移動方向を変えるために時間を図ってる 　これがUpdateになかったからtimeCountが0にならなかった
 
-        if (timeCount > chargeTime)//時間を超えたら（何秒か毎に方向変更）
+        if (timeCount > chargeTime && mainMaster.start == true)//時間を超えたら（何秒か毎に方向変更）
         {
             timeCount = 0;//カウントをリセット
             RandomDirection();
         }
 
-        seconds += Time.deltaTime;
-        if (!soundOk &&seconds >= 1f )
-        {
-            enePanel.SetActive(true);
-            audioSource.PlayOneShot(EnestartSound);
-            soundOk = true;
-        }
+
 
         
     }

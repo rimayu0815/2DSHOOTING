@@ -25,20 +25,42 @@ public class MainMaster: MonoBehaviour
     [SerializeField]
     private Text gameTimerLabel;
 
+    [SerializeField]
+    private PanelMaster panelMaster;
+
+    public bool start = false;
+
+    [SerializeField]
+    private GameObject stageText;
+    public bool onStage = false;
+    public bool offPanel = false;
+
+
     public int level;
 
     // Start is called before the first frame update
     void Start()
     {
+        stageText.SetActive(false);
 
+        StartCoroutine(isStageLevel());
+
+        startText.SetActive(false);
+
+        timerlabel.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+                    
+        if(panelMaster.ready == true)
+        {
 
-        StartTimer();
-        //GameTimer();
+            
+            StartCoroutine(StartTimer());
+
+        }
 
 
         if (enemy.destroiedEnemy == true)
@@ -50,6 +72,17 @@ public class MainMaster: MonoBehaviour
             Invoke("isGameOver", 1.5f);
         }
 
+    }
+
+
+    private IEnumerator isStageLevel()
+    {
+        stageText.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+
+        stageText.SetActive(false);
+        onStage = true;
     }
 
     /// <summary>
@@ -75,15 +108,26 @@ public class MainMaster: MonoBehaviour
 
     }
 
-    public void StartTimer()
+    private  IEnumerator StartTimer()//Ready Go
     {
-        startTimer -= Time.deltaTime;
         
-        if(startTimer < 1)
+        yield return new WaitForSeconds(3);
+        offPanel = true;
+
+        startTimer -= Time.deltaTime;
+
+        Debug.Log(startTimer);
+
+        if(startTimer <4.5)
+        {
+            timerLabel.text = "Ready…";//Readyに変更
+            timerlabel.SetActive(true);
+        }
+        if (startTimer < 1)
         {
             timerlabel.SetActive(false);
 
-            startText.SetActive(true);
+            startText.SetActive(true);//これ使ってないからこれを導入のテキストに置き換え
         }
         if(startTimer <0)
         {
@@ -91,24 +135,16 @@ public class MainMaster: MonoBehaviour
 
             startText.SetActive(false);
 
-            //Destroy(startText);
-
-            //starttext = true;
-
-            //if(starttext == true)
-            //{
-            //    startText.text = "Start!!";
-            //    Destroy(startText, 2);
-            //}
+            start = true;
+            panelMaster.ready = false;
 
             GameTimer();
         }
 
-        //timerLabel.text = "" + startTimer.ToString("0");
-        timerLabel.text = "Ready…";//Readyに変更
+
     }
 
-    public void GameTimer()
+    public void GameTimer()//右上の時間表示
     {
         gameTimer -= Time.deltaTime;
 
