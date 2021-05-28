@@ -36,19 +36,16 @@ public class SoundMaster : MonoBehaviour
 
         enePanelOn = true;
 
-        Debug.Log("一回目");
         while (true)
         {
             eneSound = true;
             yield return new WaitForSeconds(2);
 
-            Debug.Log("二回目");
             if (!eneSound)
             {
 
                 plaSound = true;
                 plaPanelOn = true;
-                Debug.Log("三回目");
                 break;
  
             }

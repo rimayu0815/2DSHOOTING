@@ -72,6 +72,12 @@ public class MainMaster: MonoBehaviour
             Invoke("isGameOver", 1.5f);
         }
 
+        if(start == true)
+        {
+            GameTimer();
+        }
+
+
     }
 
 
@@ -116,7 +122,6 @@ public class MainMaster: MonoBehaviour
 
         startTimer -= Time.deltaTime;
 
-        Debug.Log(startTimer);
 
         if(startTimer <4.5)
         {
@@ -138,7 +143,7 @@ public class MainMaster: MonoBehaviour
             start = true;
             panelMaster.ready = false;
 
-            GameTimer();
+
         }
 
 
