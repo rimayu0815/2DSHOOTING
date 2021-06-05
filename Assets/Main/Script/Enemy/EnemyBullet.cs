@@ -46,6 +46,7 @@ public class EnemyBullet : MonoBehaviour
             enemyFire();
 
             TripleenemyFire();
+
         }
 
     }
@@ -56,8 +57,10 @@ public class EnemyBullet : MonoBehaviour
     /// </summary>
     public void enemyFire()
     {
-        if(enemy.greenGauge.fillAmount >= 1 &&timeCount > 3 )
+        if(enemy.greenGauge.fillAmount >= 0.01f &&timeCount > 2 )
         {
+
+            Debug.Log("shot");
 
             timeCount = 0;
 
@@ -83,7 +86,7 @@ public class EnemyBullet : MonoBehaviour
                                  //上のUpdateメソッドを参考に作った
                                  //イメージは三方向に球が飛んでいく
     {
-        if (enemy.greenGauge.fillAmount <= 0 &&timeCount >2)
+        if (enemy.greenGauge.fillAmount <= 0 &&timeCount >1)
         {
 
             timeCount = 0;

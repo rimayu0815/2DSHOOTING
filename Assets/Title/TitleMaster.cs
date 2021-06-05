@@ -7,13 +7,12 @@ using UnityEngine.UI;
 
 public class TitleMaster : MonoBehaviour
 {
-    //[SerializeField]
-    //private Canvas textPress;
+    [SerializeField]
+    private AudioSource buttonSe;
 
     [SerializeField]
-    private AudioClip audioClip;
+    private AudioClip buttonSE;
 
-    private AudioSource audioSource;
 
     [SerializeField]
     private ButtonScript button;
@@ -21,11 +20,6 @@ public class TitleMaster : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        audioSource = gameObject.GetComponent<AudioSource>();
-
-        //audioSource.clip = audioClip;
-
-        //audioSource.Play();
 
     }
 
@@ -34,11 +28,12 @@ public class TitleMaster : MonoBehaviour
     {
         if(button.buttonStart == true)//左クリックしたら
         {
+            SE();
+
             button.buttonStart = false;
             SeaneChange();
         }
     }
-
 
     /// <summary>
     ///MainSceneへ切り替え
@@ -48,8 +43,9 @@ public class TitleMaster : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
-    public void PressDisplay()
+    public void SE()
     {
-        //textPress.DOFade(1.0f, 1.0f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+        buttonSe.PlayOneShot(buttonSE);
     }
+
 }

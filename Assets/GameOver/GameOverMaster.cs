@@ -6,6 +6,16 @@ using UnityEngine.SceneManagement;
 
 public class GameOverMaster : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource buttonSe;
+
+    [SerializeField]
+    private AudioClip buttonSE;
+
+
+    [SerializeField]
+    private ButtonGameOver buttonGameOver;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,15 +25,21 @@ public class GameOverMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (buttonGameOver.buttonReStart == true)//左クリックしたら
         {
-            SceneChange();
+            SE();
+
+            buttonGameOver.buttonReStart = false;
+            SeaneChange();
         }
     }
-
-
-    public void SceneChange()
+    public void SeaneChange()
     {
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Title");
+    }
+
+    public void SE()
+    {
+        buttonSe.PlayOneShot(buttonSE);
     }
 }

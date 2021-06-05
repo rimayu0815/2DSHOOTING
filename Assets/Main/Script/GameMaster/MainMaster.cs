@@ -35,6 +35,9 @@ public class MainMaster: MonoBehaviour
     public bool onStage = false;
     public bool offPanel = false;
 
+    [SerializeField]
+    private SoundMaster soundMaster;
+    public bool SE1;
 
     public int level;
 
@@ -132,7 +135,14 @@ public class MainMaster: MonoBehaviour
         {
             timerlabel.SetActive(false);
 
-            startText.SetActive(true);//これ使ってないからこれを導入のテキストに置き換え
+            startText.SetActive(true);
+
+            if(!SE1)
+            {
+                SE1 = true;
+                soundMaster.SE();
+            }
+
         }
         if(startTimer <0)
         {

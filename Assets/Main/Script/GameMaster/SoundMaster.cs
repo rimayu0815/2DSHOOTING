@@ -13,6 +13,11 @@ public class SoundMaster : MonoBehaviour
     [SerializeField]
     private MainMaster mainMaster;
 
+    [SerializeField]
+    private AudioSource startSe;
+    [SerializeField]
+    private AudioClip startSE;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +34,7 @@ public class SoundMaster : MonoBehaviour
 
             mainMaster.onStage = false;
         }
+
     }
 
     private IEnumerator WaitCommand()
@@ -39,7 +45,7 @@ public class SoundMaster : MonoBehaviour
         while (true)
         {
             eneSound = true;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(3.5f);
 
             if (!eneSound)
             {
@@ -56,4 +62,11 @@ public class SoundMaster : MonoBehaviour
     {
         StartCoroutine(WaitCommand());
     }
+
+    public void SE()
+    {
+        startSe.PlayOneShot(startSE);
+        
+    }
+
 }
